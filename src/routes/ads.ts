@@ -1,0 +1,44 @@
+// src/routes/ads.ts
+import express from "express";
+import getLocation from '../utils/maxmind.js';
+import { trackAdImpression, trackAdClick } from '../utils/analytics.js';
+import sequelize from '../utils/db.js';
+import Ad from '../models/Ad.js';
+
+const router = express.Router();
+
+router.get('/ads', async (req: any, res: any) => {
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    const siteID = req.query.siteid;
+    console.log(`Received request from ${ip}`);
+    const location = await getLocation(ip);
+    const ad = await Ad.findOne({ order: sequelize.random() });
+    if (ad) {
+        trackAdImpression(ad.dataValues.id, location, siteID, ad.dataValues.advertiserID);
+        res.status(200).send(ad);
+    } else {
+        res.status(404).send({ message: 'No ads available' });
+    }
+});
+
+router.get('/ads/click', async (req: any, res: any) => {
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    const siteID = req.query.siteid;
+    const adID = req.query.adid;
+    const urlRedirect = req.query.redirect;
+    if (!adID || !urlRedirect || !siteID) {
+        return res.status(400).send({ message: 'One or more parameters are missing' });
+    }
+    const redirectUrl = unescape(urlRedirect);
+    console.log(`Received click from ${ip} on ad ${adID} on site ${siteID}`);
+    const location = await getLocation(ip);
+    const ad = await Ad.findByPk(adID);
+    if (ad) {
+        trackAdClick(adID, location, siteID, ad.dataValues.advertiserID);
+        res.redirect(redirectUrl);
+    } else {
+        res.status(404).send({ message: 'Ad not found' });
+    }
+});
+
+export default router;
