@@ -12,6 +12,7 @@
   "author": "hi5a",
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
+    "@google-cloud/bigquery": "^7.9.0",
     "axios": "^1.7.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

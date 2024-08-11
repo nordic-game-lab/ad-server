@@ -14,8 +14,12 @@ router.get('/ads', async (req: any, res: any) => {
     const location = await getLocation(ip);
     const ad = await Ad.findOne({ order: sequelize.random() });
     if (ad) {
-        trackAdImpression(ad.dataValues.id, location, siteID, ad.dataValues.advertiserID);
+        if (location.country){
+        trackAdImpression(ad.dataValues.id, location.country, siteID, ad.dataValues.advertiserID, ad.dataValues.campaign);
         res.status(200).send(ad);
+        } else {
+            res.status(404).send({ message: 'No ads available in your location' });
+        }
     } else {
         res.status(404).send({ message: 'No ads available' });
     }
@@ -34,8 +38,12 @@ router.get('/ads/click', async (req: any, res: any) => {
     const location = await getLocation(ip);
     const ad = await Ad.findByPk(adID);
     if (ad) {
-        trackAdClick(adID, location, siteID, ad.dataValues.advertiserID);
+        if (location.country){
+        trackAdClick(adID, location.country, siteID, ad.dataValues.advertiserID, ad.dataValues.campaign);
         res.redirect(redirectUrl);
+        } else {
+            res.status(404).send({ message: 'No ads available in your location' });
+        }
     } else {
         res.status(404).send({ message: 'Ad not found' });
     }

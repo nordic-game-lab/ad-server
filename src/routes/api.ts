@@ -2,26 +2,31 @@
 import express from 'express';
 import 'dotenv/config';
 import Ad from '../models/Ad.js';
+import Event from '../models/Event.js';
 
 const router = express.Router();
 const coolApiKey = 'Bearer '+ process.env.API_KEY;
 
 async function isAuth(req: any, res: any, next:any) {
+  if (process.env.API_KEY){
     const auth = req.headers["authorization"];
-  try{
-    if (auth){
-      if (auth == coolApiKey) {
-        next();
-      } else {
-        res.status(401).send("Access forbidden, go to https://developers.learnhub.nordicgamelab.org to get started");
+    try{
+      if (auth){
+        if (auth == coolApiKey) {
+          next();
+        } else {
+          res.status(401).send("Access forbidden, go to https://developers.learnhub.nordicgamelab.org to get started");
+        }
+      }else{
+        res.status(400).send("Missing Authorization, Bearer token not found");
       }
-    }else{
-      res.status(400).send("Missing Authorization, Bearer token not found");
+    }catch(e){
+      console.log(e);
     }
-  } catch(e){
-    console.log(e);
+  }else{
+    res.status(500).send("API key not found in environment variables");
   }
-  }
+}
 
 router.post('/api/adCreate', isAuth, async (req, res) => {
     const { imageURL, link, campaign, advertiserID } = req.body;
@@ -55,5 +60,13 @@ router.delete('/api/ads/:id', isAuth, async (req, res) => {
         res.status(404).send({ message: 'Ad not found' });
     }
 });
+
+router.get('/api/ads/analytics/:id', isAuth, async (req, res) => {
+  const { id } = req.params;
+  const impressions = (await Event.findAndCountAll({where: { ad_id: id, event_type: 'impression' } })).count;
+  const clicks = (await Event.findAndCountAll({where: { ad_id: id, event_type: 'click' } })).count;
+  console.log(impressions, clicks);
+  res.status(200).json({"impressions": impressions, "clicks": clicks});
+})
 
 export default router;
