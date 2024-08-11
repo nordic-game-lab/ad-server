@@ -31,7 +31,7 @@ async function isAuth(req: any, res: any, next:any) {
 router.post('/api/adCreate', isAuth, async (req, res) => {
     const { imageURL, link, campaign, advertiserID } = req.body;
     const ad = await Ad.create({ imageURL, link, campaign, advertiserID });
-    res.status(201).send(ad);
+    res.status(201).send(ad.dataValues);
 });
 
 router.put('/api/ads/:id', isAuth, async (req, res) => {
