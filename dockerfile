@@ -1,6 +1,6 @@
 # Copyright (c) 2024 Nordic Game Lab, LLC. All rights reserved
 # Base image
-FROM node:20.11.1-alpine
+FROM node:20.16.0-alpine
 
 LABEL "org.nordicgamelab.vendor"="Nordic Game Lab, LLC"
 LABEL version="1.0.0"
