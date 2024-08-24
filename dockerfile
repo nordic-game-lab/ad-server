@@ -1,4 +1,5 @@
 # Copyright (c) 2024 Nordic Game Lab, LLC. All rights reserved
+#You may not use this code without the express permission of Nordic Game Lab LLC in writing.
 # Base image
 FROM node:20.17.0-alpine
 
