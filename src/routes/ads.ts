@@ -53,4 +53,14 @@ router.get('/ads/click', async (req: any, res: any) => {
     }
 });
 
+router.get('/ads/:id', async (req, res) => {
+    const { id } = req.params;
+    const ad = await Ad.findByPk(id);
+    if (ad) {
+        res.status(200).send(ad.dataValues);
+    } else {
+        res.status(404).send({ message: 'Ad not found' });
+    }
+})
+
 export default router;

@@ -7,6 +7,7 @@ import express from 'express';
 import 'dotenv/config';
 import Ad from '../models/Ad.js';
 import Event from '../models/Event.js';
+import Advertiser from '../models/Advertiser.js';
 
 const router = express.Router();
 const coolApiKey = 'Bearer '+ process.env.API_KEY;
@@ -71,6 +72,23 @@ router.get('/api/ads/analytics/:id', isAuth, async (req, res) => {
   const clicks = (await Event.findAndCountAll({where: { ad_id: id, event_type: 'click' } })).count;
   console.log(impressions, clicks);
   res.status(200).json({"impressions": impressions, "clicks": clicks});
+});
+
+router.get('/api/advertiser/:id', async (req, res) => {
+  const { id } = req.params;
+  const advertiser = await Advertiser.findByPk(id);
+  if (advertiser) {
+    res.status(200).send(advertiser.dataValues);
+  } else {
+    res.status(404).send({ message: 'Advertiser not found' });
+  }
+})
+
+router.post('/api/advertiser', isAuth, async (req, res) => {
+  const { name, description, logo, link } = req.body;
+  let advertiser_name = name;
+  const advertiser = await Advertiser.create({ advertiser_name, description, logo, link });
+  res.status(201).send(advertiser.dataValues);
 })
 
 export default router;
