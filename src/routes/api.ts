@@ -36,7 +36,11 @@ async function isAuth(req: any, res: any, next:any) {
 router.post('/api/adCreate', isAuth, async (req, res) => {
     const { imageURL, link, campaign, advertiserID } = req.body;
     const ad = await Ad.create({ imageURL, link, campaign, advertiserID });
-    res.status(201).send(ad.dataValues);
+    if (imageURL && link && campaign && advertiserID){
+      res.status(201).send(ad.dataValues);
+    } else {
+      res.status(403).send({ message: 'One or more parameters are missing' });
+  }
 });
 
 router.put('/api/ads/:id', isAuth, async (req, res) => {
@@ -88,7 +92,7 @@ router.post('/api/advertiser', isAuth, async (req, res) => {
   const { name, description, logo, link } = req.body;
   let advertiser_name = name;
   const advertiser = await Advertiser.create({ advertiser_name, description, logo, link });
-  if (advertiser_name & description & logo & link){
+  if (advertiser_name && description && logo && link){
     res.status(201).send(advertiser.dataValues);
   } else {
     res.status(403).send({ message: 'One or more parameters are missing' });
