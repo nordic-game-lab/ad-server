@@ -82,13 +82,17 @@ router.get('/api/advertiser/:id', async (req, res) => {
   } else {
     res.status(404).send({ message: 'Advertiser not found' });
   }
-})
+});
 
 router.post('/api/advertiser', isAuth, async (req, res) => {
   const { name, description, logo, link } = req.body;
   let advertiser_name = name;
   const advertiser = await Advertiser.create({ advertiser_name, description, logo, link });
-  res.status(201).send(advertiser.dataValues);
-})
+  if (advertiser_name & description & logo & link){
+    res.status(201).send(advertiser.dataValues);
+  } else {
+    res.status(403).send({ message: 'One or more parameters are missing' });
+  }
+});
 
 export default router;
