@@ -61,6 +61,6 @@ router.get('/ads/:id', async (req, res) => {
     } else {
         res.status(404).send({ message: 'Ad not found' });
     }
-})
+});
 
 export default router;
