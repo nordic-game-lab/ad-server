@@ -45,5 +45,5 @@ labels:
     exclude: []
   'automerge':
     include:
-      - '\b**Automerge**: Enabled\b'
+      - '\b: Enabled\b'
     exclude: []
