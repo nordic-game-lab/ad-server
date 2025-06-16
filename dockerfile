@@ -4,7 +4,7 @@
 FROM node:22.16.0-alpine
 
 LABEL "org.nordicgamelab.vendor"="Nordic Game Lab, LLC"
-LABEL version="1.0.0"
+LABEL version="2.0.0"
 
 # Set working directory
 WORKDIR /app
