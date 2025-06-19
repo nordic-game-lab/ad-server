@@ -1,7 +1,3 @@
-/** 
-* @license Copyright (c) 2024 Nordic Game Lab LLC
-* You may not use this code without the express permission of Nordic Game Lab LLC in writing.
-*/
 // src/routes/ads.ts
 import express from "express";
 import getLocation from '../utils/maxmind.js';
