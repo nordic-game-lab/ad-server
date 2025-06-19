@@ -1,7 +1,3 @@
-/** 
-* @license Copyright (c) 2024 Nordic Game Lab LLC
-* You may not use this code without the express permission of Nordic Game Lab LLC in writing.
-*/
 import express from "express";
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
