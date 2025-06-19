@@ -10,7 +10,7 @@
     "build": "npx tsc && cp -r -f src/routes/public dist/routes/public"
   },
   "author": "hi5a",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MPL-2",
   "dependencies": {
     "@google-cloud/bigquery": "^7.9.0",
     "axios": "^1.7.3",
