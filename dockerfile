@@ -1,5 +1,5 @@
 # Base image
-FROM node:22.21.1-alpine
+FROM node:22.22.0-alpine
 
 LABEL "org.nordicgamelab.vendor"="Nordic Game Lab, LLC"
 LABEL version="2.0.0"
