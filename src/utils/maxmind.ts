@@ -1,1 +1,9 @@
+/** 
+* @license MPL 2.0
+* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at https://mozilla.org/MPL/2.0/.
+* 
+* Copyright Nordic Game Lab, LLC. and Andrew Ball.
+*/
 import maxmind,{CityResponse}from'maxmind';const lookup=await maxmind.open<CityResponse>('./GeoLite2-City/GeoLite2-City.mmdb');export default function getLocation(ip:string){let location=lookup.get(ip);if(!location){return location={continent:{code:'NA',geoname_id:6255149,names:{de:'Nordamerika',en:'North America',es:'Norteamérica',fr:'Amérique du Nord',ja:'北アメリカ','pt-BR':'América do Norte',ru:'Северная Америка','zh-CN':'北美洲'}},country:{geoname_id:6252001,iso_code:'US',names:{de:'USA',en:'United States',es:'Estados Unidos',fr:'États Unis',ja:'アメリカ','pt-BR':'EUA',ru:'США','zh-CN':'美国'}},location:{accuracy_radius:500,latitude:35.2296,longitude:-80.843,time_zone:'America/New_York'},registered_country:{geoname_id:6252001,iso_code:'US',names:{de:'USA',en:'United States',es:'Estados Unidos',fr:'États Unis',ja:'アメリカ','pt-BR':'EUA',ru:'США','zh-CN':'美国'}},subdivisions:[{geoname_id:4482348,iso_code:'NC',names:{de:'NC',en:'NC',es:'NC',fr:'NC',ja:'NC','pt-BR':'NC',ru:'США','zh-CN':'美国'}}]};}else{return location;}};
