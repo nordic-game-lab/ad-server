@@ -1,6 +1,6 @@
 {
   "name": "ad-server",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A server to show ads",
   "main": "dist/index.js",
   "type": "module",
@@ -12,7 +12,7 @@
   "author": "hi5a",
   "license": "MPL-2",
   "dependencies": {
-    "@google-cloud/bigquery": "^7.9.0",
+    "@google-cloud/bigquery": "^9.0.0",
     "axios": "^1.7.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
