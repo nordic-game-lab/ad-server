@@ -1,6 +1,6 @@
 {
   "name": "ad-server",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A server to show ads",
   "main": "dist/index.js",
   "type": "module",
@@ -19,7 +19,7 @@
     "express": "^5.0.0",
     "maxmind": "^4.3.21",
     "sequelize": "^6.37.3",
-    "sqlite3": "^5.1.7",
+    "sqlite3": "^6.0.0",
     "typescript": "^5.5.4"
   },
   "devDependencies": {
